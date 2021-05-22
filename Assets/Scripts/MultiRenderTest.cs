@@ -18,6 +18,5 @@ public class MultiRenderTest : MonoBehaviour
 
     void Awake()
     {
-
     }
 }
