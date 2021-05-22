@@ -36,12 +36,18 @@
                 return o;
             }
 
+            struct FragOut
+            {
+                fixed4 col : COLOR0;
+            };
+
             sampler2D _MainTex;
 
-            fixed4 frag (v2f i) : SV_Target
+            FragOut frag (v2f i)
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                return col;
+                FragOut o;
+                o.col = tex2D(_MainTex, i.uv);
+                return o;
             }
             ENDCG
         }
