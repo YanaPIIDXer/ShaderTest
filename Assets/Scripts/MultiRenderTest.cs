@@ -18,5 +18,10 @@ public class MultiRenderTest : MonoBehaviour
 
     void Awake()
     {
+        WebCamDevice Device = WebCamTexture.devices[0];
+        var CamTex = new WebCamTexture(Device.name, 1920, 1080, 60);
+        CamTex.Play();
+
+        RenderTextureRenderer.material.SetTexture("_MainTex", CamTex);
     }
 }
