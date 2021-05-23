@@ -352,7 +352,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: 2
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 32
@@ -428,8 +428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BufferTextureRenderer: {fileID: 782515540}
   RenderTextureRenderer: {fileID: 1646516227}
-  CameraTextureRenderer: {fileID: 1752754148}
-  RenderCamera: {fileID: 840023178}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +485,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -619,8 +617,9 @@ GameObject:
   - component: {fileID: 1752754149}
   - component: {fileID: 1752754148}
   - component: {fileID: 1752754147}
+  - component: {fileID: 1752754150}
   m_Layer: 5
-  m_Name: Camera
+  m_Name: WebCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -701,3 +700,16 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752754145}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1752754150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752754145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea08f61163a2e049b9db8044b6f9bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RenderCamera: {fileID: 840023178}
