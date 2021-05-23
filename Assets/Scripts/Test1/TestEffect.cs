@@ -32,10 +32,16 @@ namespace Test1
         void Awake()
         {
             WebCamera.RenderTarget
-                .Subscribe((Target) =>
-                {
-                    BufferRenderer.material.mainTexture = Target;
-                }).AddTo(gameObject);
+                .Subscribe(Initialize).AddTo(gameObject);
+        }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="WebCameraTexture">Webカメラからの出力テクスチャ</param>
+        private void Initialize(RenderTexture WebCameraTexture)
+        {
+            BufferRenderer.material.mainTexture = WebCameraTexture;
         }
     }
 }

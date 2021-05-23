@@ -23,6 +23,7 @@ public class WebCameraRenderer : MonoBehaviour
 
     /// <summary>
     /// 描画先
+    /// ※Awakeの実行順序に依存しないようにObservableとして外部に公開する
     /// </summary>
     public IObservable<RenderTexture> RenderTarget { get { return _RenderTarget; } }
 
