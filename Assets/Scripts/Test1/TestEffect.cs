@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
+using UnityEngine.Rendering;
 
 namespace Test1
 {
@@ -12,10 +13,16 @@ namespace Test1
     public class TestEffect : MonoBehaviour
     {
         /// <summary>
-        /// バッファ描画
+        /// バッファ確認用
         /// </summary>
         [SerializeField]
-        private MeshRenderer BufferRenderer = null;
+        private MeshRenderer BufferCheck = null;
+
+        /// <summary>
+        /// 本番テクスチャ確認用
+        /// </summary>
+        [SerializeField]
+        private MeshRenderer RenderCheck = null;
 
         /// <summary>
         /// 本番描画先
@@ -47,8 +54,17 @@ namespace Test1
 
             var Mat = MainRenderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
+            Mat.SetTexture("_BufferTex", BufferTex);
+            Mat.SetTexture("_RenderTex", RenderTex);
 
-            BufferRenderer.material.mainTexture = BufferTex;
+            BufferCheck.material.mainTexture = BufferTex;
+            RenderCheck.material.mainTexture = RenderTex;
+
+            var CmdBuffer = new CommandBuffer();
+            var Identifier = new RenderTargetIdentifier(BuiltinRenderTextureType.CurrentActive);
+            CmdBuffer.SetRenderTarget(-1);
+            CmdBuffer.Blit(RenderTex, Identifier);
+            Camera.main.AddCommandBuffer(CameraEvent.AfterEverything, CmdBuffer);
         }
     }
 }
