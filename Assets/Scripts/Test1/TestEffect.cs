@@ -28,7 +28,7 @@ namespace Test1
         /// 本番描画先
         /// </summary>
         [SerializeField]
-        private MeshRenderer MainRenderer = null;
+        private MeshRenderer ProductionRenderer = null;
 
         /// <summary>
         /// Webカメラ
@@ -52,7 +52,7 @@ namespace Test1
             var RenderTex = new RenderTexture(1024, 768, 24);
             Camera.main.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
 
-            var Mat = MainRenderer.material;
+            var Mat = ProductionRenderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
             Mat.SetTexture("_RenderTex", RenderTex);

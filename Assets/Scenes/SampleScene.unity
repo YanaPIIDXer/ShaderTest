@@ -429,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BufferCheck: {fileID: 782515540}
   RenderCheck: {fileID: 1566195609}
-  MainRenderer: {fileID: 1646516227}
+  ProductionRenderer: {fileID: 1646516227}
   WebCamera: {fileID: 1752754150}
 --- !u!1 &963194225
 GameObject:
