@@ -39,6 +39,7 @@
             struct FragOut
             {
                 float4 col1 : COLOR0;
+                float4 col2 : COLOR1;
             };
 
             sampler2D _MainTex;
@@ -46,7 +47,9 @@
             FragOut frag (v2f i)
             {
                 FragOut o;
-                o.col1 = tex2D(_MainTex, i.uv);
+                float4 col = tex2D(_MainTex, i.uv);
+                o.col1 = col;
+                o.col2 = col;
                 return o;
             }
             ENDCG

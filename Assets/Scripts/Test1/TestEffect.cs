@@ -41,7 +41,14 @@ namespace Test1
         /// <param name="WebCameraTexture">Webカメラからの出力テクスチャ</param>
         private void Initialize(RenderTexture WebCameraTexture)
         {
-            BufferRenderer.material.mainTexture = WebCameraTexture;
+            var BufferTex = new RenderTexture(1024, 768, 0);
+            var RenderTex = new RenderTexture(1024, 768, 24);
+            Camera.main.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
+
+            var Mat = MainRenderer.material;
+            Mat.SetTexture("_MainTex", WebCameraTexture);
+
+            BufferRenderer.material.mainTexture = BufferTex;
         }
     }
 }
