@@ -39,6 +39,7 @@ namespace Test1
         void Awake()
         {
             WebCamera.RenderTarget
+                .Where((Tex) => Tex != null)
                 .Subscribe(Initialize).AddTo(gameObject);
         }
 
