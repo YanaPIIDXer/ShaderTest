@@ -35,12 +35,13 @@ public class WebCameraRenderer : MonoBehaviour
 
         WebCamDevice Device = WebCamTexture.devices[0];
         var CamTex = new WebCamTexture(Device.name, Screen.width, Screen.height, 60);
-        CamTex.Play();
 
-        GetComponent<MeshRenderer>().material.mainTexture = CamTex;
+        GetComponent<MeshRenderer>().material.SetTexture("_MainTex", CamTex);
 
         var Target = new RenderTexture(1024, 768, 0);
         RenderCamera.SetTargetBuffers(Target.colorBuffer, Target.depthBuffer);
         _RenderTarget.Value = Target;
+
+        CamTex.Play();
     }
 }
