@@ -12,6 +12,9 @@ public class SceneChanger : MonoBehaviour
 {
     void Awake()
     {
+        // 本来なら１つのシーン上に全部のエフェクトを置いて管理するべきなのかも知れないが、
+        // 追加するたびに至る所にトグル処理を書かなければならないっぽい
+        // それならこっちの方がマシ
         this.UpdateAsObservable()
             .Where((_) => Input.GetKeyDown(KeyCode.Keypad1))
             .Subscribe((_) => SceneManager.LoadScene("Test1"))
