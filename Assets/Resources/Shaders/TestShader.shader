@@ -4,7 +4,6 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _BufferTex ("Texture", 2D) = "white" {}
-        _RenderTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -50,7 +49,7 @@
             {
                 FragOut o;
                 float4 col = tex2D(_MainTex, i.uv);
-                o.col1 = col;
+                o.col1 = float4(col.r, 0, 0, col.a);
                 o.col2 = col;
                 return o;
             }
