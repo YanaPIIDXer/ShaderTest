@@ -29,10 +29,6 @@ public class WebCameraRenderer : MonoBehaviour
 
     void Awake()
     {
-        float Height = RenderCamera.orthographicSize * 2;
-        float Width = Height * RenderCamera.aspect;
-        transform.localScale = new Vector3(Width, Height, 0);
-
         WebCamDevice Device = WebCamTexture.devices[0];
         var CamTex = new WebCamTexture(Device.name, Screen.width, Screen.height, 60);
 

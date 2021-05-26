@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 281274810}
   - component: {fileID: 281274809}
   - component: {fileID: 281274813}
+  - component: {fileID: 281274814}
   m_Layer: 0
   m_Name: Production
   m_TagString: Untagged
@@ -303,6 +304,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Effect: {fileID: 1573785192}
+--- !u!114 &281274814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281274808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13798339d1fa39848bcce4ff73059019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetCamera: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +579,7 @@ GameObject:
   - component: {fileID: 1573785189}
   - component: {fileID: 1573785188}
   - component: {fileID: 1573785192}
+  - component: {fileID: 1573785193}
   m_Layer: 4
   m_Name: Effect
   m_TagString: Untagged
@@ -661,6 +676,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WebCamera: {fileID: 1752754150}
   EffectCamera: {fileID: 182767755}
+--- !u!114 &1573785193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573785187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13798339d1fa39848bcce4ff73059019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetCamera: {fileID: 182767755}
 --- !u!1 &1752754145
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +702,7 @@ GameObject:
   - component: {fileID: 1752754148}
   - component: {fileID: 1752754147}
   - component: {fileID: 1752754150}
+  - component: {fileID: 1752754151}
   m_Layer: 5
   m_Name: WebCamera
   m_TagString: Untagged
@@ -769,3 +798,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderCamera: {fileID: 840023178}
+--- !u!114 &1752754151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752754145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13798339d1fa39848bcce4ff73059019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetCamera: {fileID: 840023178}

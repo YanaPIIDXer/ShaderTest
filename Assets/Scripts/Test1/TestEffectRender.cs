@@ -24,10 +24,6 @@ namespace Test1
 
         void Awake()
         {
-            float Height = Camera.main.orthographicSize * 2;
-            float Width = Height * Camera.main.aspect;
-            transform.localScale = new Vector3(Width, Height, 1);
-
             Renderer = GetComponent<MeshRenderer>();
 
             Effect.TargetTexture

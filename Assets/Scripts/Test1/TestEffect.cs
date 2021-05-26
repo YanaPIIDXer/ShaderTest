@@ -41,10 +41,6 @@ namespace Test1
 
         void Awake()
         {
-            float Height = EffectCamera.orthographicSize * 2;
-            float Width = Height * EffectCamera.aspect;
-            transform.localScale = new Vector3(Width, Height, 0);
-
             Renderer = GetComponent<MeshRenderer>();
 
             WebCamera.RenderTarget
