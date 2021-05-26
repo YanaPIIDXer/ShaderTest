@@ -50,7 +50,7 @@ namespace Test1
         private void Initialize(RenderTexture WebCameraTexture)
         {
             var BufferTex = new RenderTexture(1024, 768, 0);
-            var RenderTex = new RenderTexture(1024, 768, 24);
+            var RenderTex = new RenderTexture(1024, 768, 0);
             Camera.main.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
 
             var Mat = ProductionRenderer.material;
