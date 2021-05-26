@@ -28,12 +28,17 @@ public class WebCameraRenderer : MonoBehaviour
     /// </summary>
     public IObservable<RenderTexture> RenderTarget { get { return _RenderTarget; } }
 
+    /// <summary>
+    /// Webカメラのテクスチャ
+    /// </summary>
+    private WebCamTexture CamTex = null;
+
     void Awake()
     {
         GetComponent<FillQuad>().TargetCamera = RenderCamera;
 
         WebCamDevice Device = WebCamTexture.devices[0];
-        var CamTex = new WebCamTexture(Device.name, Screen.width, Screen.height, 60);
+        CamTex = new WebCamTexture(Device.name, Screen.width, Screen.height, 60);
 
         GetComponent<MeshRenderer>().material.SetTexture("_MainTex", CamTex);
 
@@ -42,5 +47,12 @@ public class WebCameraRenderer : MonoBehaviour
 
         CamTex.Play();
         _RenderTarget.Value = Target;
+    }
+
+    void OnDestroy()
+    {
+        // シーン遷移が絡む場合、これが無いとカメラを掴みっぱなしになる
+        // ※EditorでPlayModeを抜ける時は何故か問題なくカメラを放す
+        CamTex.Stop();
     }
 }
