@@ -70,11 +70,12 @@ namespace Test1
         {
             var BufferTex = new RenderTexture(Screen.width, Screen.height, 0);
             var RenderTex = new RenderTexture(Screen.width, Screen.height, 24);
-            EffectCamera.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
+            EffectCamera.SetTargetBuffers(new RenderBuffer[] { RenderTex.colorBuffer }, RenderTex.depthBuffer);
 
             var Mat = Renderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
+            Mat.SetTexture("_RenderTex", RenderTex);
 
             var PostCmdBuffer = new CommandBuffer();
             var Identifier = new RenderTargetIdentifier(BuiltinRenderTextureType.CurrentActive);
@@ -84,6 +85,10 @@ namespace Test1
 
             _TargetTexture.Value = RenderTex;
             _BufferTarget.Value = BufferTex;
+
+            Observable.Interval(TimeSpan.FromSeconds(0.5))
+                      .Subscribe((_) => Graphics.Blit(WebCameraTexture, BufferTex))
+                      .AddTo(gameObject);
         }
     }
 }

@@ -40,17 +40,18 @@
             struct FragOut
             {
                 float4 col1 : COLOR0;
-                float4 col2 : COLOR1;
             };
 
             sampler2D _MainTex;
+            sampler2D _BufferTex;
 
             FragOut frag (v2f i)
             {
                 FragOut o;
                 float4 col = tex2D(_MainTex, i.uv);
-                o.col1 = float4(col.r, 0, 0, col.a);
-                o.col2 = col;
+                float4 bufferCol = tex2D(_BufferTex, i.uv);     // １フレーム前のテクスチャになっているはず
+                o.col1 = col * bufferCol * 0.5f;
+                o.col1.a = 1.0f;
                 return o;
             }
             ENDCG
