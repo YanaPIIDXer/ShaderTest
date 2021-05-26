@@ -21,7 +21,7 @@ public class FillQuad : MonoBehaviour
     /// </summary>
     public Camera TargetCamera
     {
-        get { return _TargetCamera; }
+        private get { return _TargetCamera; }
         set
         {
             _TargetCamera = value;
@@ -31,7 +31,7 @@ public class FillQuad : MonoBehaviour
 
     void Awake()
     {
-        if (TargetCamera == null)
+        if (_TargetCamera == null)
         {
             // 未設定の場合はメインカメラを使用する
             _TargetCamera = Camera.main;
