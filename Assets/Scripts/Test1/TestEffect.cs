@@ -39,16 +39,6 @@ namespace Test1
         /// </summary>
         public IObservable<RenderTexture> TargetTexture { get { return _TargetTexture; } }
 
-        /// <summary>
-        /// バッファ用テクスチャ
-        /// </summary>
-        private ReactiveProperty<RenderTexture> _BufferTarget = new ReactiveProperty<RenderTexture>();
-
-        /// <summary>
-        /// バッファ用テクスチャ
-        /// </summary>
-        public IObservable<RenderTexture> BufferTarget { get { return _BufferTarget; } }
-
         void Awake()
         {
             float Height = EffectCamera.orthographicSize * 2;
@@ -83,7 +73,6 @@ namespace Test1
             EffectCamera.AddCommandBuffer(CameraEvent.AfterEverything, PostCmdBuffer);
 
             _TargetTexture.Value = RenderTex;
-            _BufferTarget.Value = BufferTex;
 
             // 2FPSで動くWebカメラの映像を作り上げ、Shader内で60FPSの方と合成する
             //      →残像の出来上がり

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using UniRx.Operators;
 using System;
 
 namespace Test1
@@ -13,33 +12,27 @@ namespace Test1
     public class TestEffectRender : MonoBehaviour
     {
         /// <summary>
-        /// エフェクト描画用
-        /// </summary>
-        [SerializeField]
-        private MeshRenderer MainRenderer = null;
-
-        /// <summary>
-        /// バッファ（確認）描画用
-        /// </summary>
-        [SerializeField]
-        private MeshRenderer BufferRenderer = null;
-
-        /// <summary>
         /// エフェクト
         /// </summary>
         [SerializeField]
         private TestEffect Effect = null;
 
+        /// <summary>
+        /// レンダラ
+        /// </summary>
+        private MeshRenderer Renderer = null;
+
         void Awake()
         {
-            Effect.TargetTexture
-                  .Where((Tex) => Tex != null)
-                  .Subscribe((Tex) => MainRenderer.material.mainTexture = Tex)
-                  .AddTo(gameObject);
+            float Height = Camera.main.orthographicSize * 2;
+            float Width = Height * Camera.main.aspect;
+            transform.localScale = new Vector3(Width, Height, 1);
 
-            Effect.BufferTarget
-                  .Where((Tex) => Tex != null)
-                  .Subscribe((Tex) => BufferRenderer.material.mainTexture = Tex)
+            Renderer = GetComponent<MeshRenderer>();
+
+            Effect.TargetTexture
+                  .Where((t) => t != null)
+                  .Subscribe((t) => Renderer.material.mainTexture = t)
                   .AddTo(gameObject);
         }
     }
