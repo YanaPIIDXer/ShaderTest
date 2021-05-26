@@ -29,5 +29,10 @@ public class SceneChanger : MonoBehaviour
             .Where((_) => Input.GetKeyDown(KeyCode.Keypad2))
             .Subscribe((_) => SceneManager.LoadScene("Test2"))
             .AddTo(gameObject);
+
+        this.UpdateAsObservable()
+            .Where((_) => Input.GetKeyDown(KeyCode.Keypad3))
+            .Subscribe((_) => SceneManager.LoadScene("Test3"))
+            .AddTo(gameObject);
     }
 }
