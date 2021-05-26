@@ -50,9 +50,9 @@ namespace Test3
             Mat.SetFloat("_TexelX", 1.0f / Screen.width);
             Mat.SetFloat("_TexelY", 1.0f / Screen.height);
 
-            // ３０フレーム毎にWebカメラの画像を取得してバッファに流し、Shader内で差分を取る
+            // １０フレーム毎にWebカメラの画像を取得してバッファに流し、Shader内で差分を取る
             this.FixedUpdateAsObservable()
-                .ThrottleFirstFrame(30)
+                .ThrottleFirstFrame(10)
                 .Subscribe((_) =>
                 {
                     Graphics.Blit(WebCameraTexture, BufferTex);
