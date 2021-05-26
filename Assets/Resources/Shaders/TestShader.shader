@@ -49,7 +49,7 @@
             {
                 FragOut o;
                 float4 col = tex2D(_MainTex, i.uv);
-                float4 bufferCol = tex2D(_BufferTex, i.uv);     // １フレーム前のテクスチャになっているはず
+                float4 bufferCol = tex2D(_BufferTex, i.uv);
                 o.col1 = col * bufferCol * 0.5f;
                 o.col1.a = 1.0f;
                 return o;
