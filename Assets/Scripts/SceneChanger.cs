@@ -16,6 +16,11 @@ public class SceneChanger : MonoBehaviour
         // 追加するたびに至る所にトグル処理を書かなければならないっぽい
         // それならこっちの方がマシ
         this.UpdateAsObservable()
+            .Where((_) => Input.GetKeyDown(KeyCode.Keypad0))
+            .Subscribe((_) => SceneManager.LoadScene("Nothing"))
+            .AddTo(gameObject);
+
+        this.UpdateAsObservable()
             .Where((_) => Input.GetKeyDown(KeyCode.Keypad1))
             .Subscribe((_) => SceneManager.LoadScene("Test1"))
             .AddTo(gameObject);
