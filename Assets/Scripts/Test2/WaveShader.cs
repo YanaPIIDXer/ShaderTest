@@ -47,6 +47,7 @@ namespace Test2
         private void Initialize(RenderTexture WebCameraTexture)
         {
             var BufferTex = new RenderTexture(Screen.width, Screen.height, 0);
+            var WaveMap = new RenderTexture(Screen.width, Screen.height, 0);
             var RenderTex = new RenderTexture(Screen.width, Screen.height, 24);
 
             Graphics.Blit(WebCameraTexture, BufferTex);
@@ -55,6 +56,10 @@ namespace Test2
             var Mat = Renderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
+            Mat.SetTexture("_WaveMap", WaveMap);
+            Mat.SetInt("_Enable", 0);
+            Mat.SetFloat("_TexelX", 1.0f / Screen.width);
+            Mat.SetFloat("_TexelY", 1.0f / Screen.height);
 
             var PostCmdBuffer = new CommandBuffer();
             var Identifier = new RenderTargetIdentifier(BuiltinRenderTextureType.CurrentActive);
@@ -62,9 +67,22 @@ namespace Test2
             PostCmdBuffer.Blit(RenderTex, Identifier);
             RenderCamera.AddCommandBuffer(CameraEvent.AfterEverything, PostCmdBuffer);
 
+            // １０フレーム毎にWebカメラの画像を取得してバッファに流し、差分を取る
             this.FixedUpdateAsObservable()
-                .ThrottleFirstFrame(5)
-                .Subscribe((_) => Graphics.Blit(WebCameraTexture, BufferTex));
+                .ThrottleFirstFrame(10)
+                .Subscribe((_) =>
+                {
+                    Graphics.Blit(WebCameraTexture, BufferTex);
+                }).AddTo(gameObject);
+
+            // HACK:何故か序盤に物凄い差分が出るので１秒後に起動
+            Observable.Timer(TimeSpan.FromSeconds(1.0))
+                      .Subscribe((_) => Mat.SetInt("_Enable", 1));
+
+            // これをやらないとWaveMapが参照できないっぽい
+            this.FixedUpdateAsObservable()
+                .Subscribe((_) => Graphics.Blit(RenderTex, WaveMap))
+                .AddTo(gameObject);
         }
     }
 }
