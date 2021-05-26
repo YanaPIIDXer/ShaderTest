@@ -6,6 +6,7 @@ using UnityEngine;
 /// カメラ全体に描画されるQuad
 /// ※１：Quadでの使用を想定。それ以外のMeshでの挙動は知らん
 /// ※２：CameraのProjectionがorthographicになっていないと正常動作しない
+/// <see href="https://gist.github.com/tsubaki/8109124">参考資料</see>
 /// </summary>
 public class FillQuad : MonoBehaviour
 {
