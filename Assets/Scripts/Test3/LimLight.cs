@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using System;
+using UniRx.Triggers;
+using UnityEngine.Rendering;
 
 namespace Test3
 {
@@ -16,6 +18,12 @@ namespace Test3
         /// </summary>
         [SerializeField]
         private WebCameraRenderer WebCamRenderer = null;
+
+        /// <summary>
+        /// 描画カメラ
+        /// </summary>
+        [SerializeField]
+        private Camera RenderCamera = null;
 
         void Awake()
         {
@@ -31,10 +39,24 @@ namespace Test3
         /// <param name="WebCameraTexture">Webカメラのテクスチャ</param>
         private void Initialize(RenderTexture WebCameraTexture)
         {
+            var BufferTex = new RenderTexture(Screen.width, Screen.height, 0);
+
+            Graphics.Blit(WebCameraTexture, BufferTex);
+
             var Renderer = GetComponent<MeshRenderer>();
             var Mat = Renderer.material;
+            Mat.SetTexture("_MainTex", WebCameraTexture);
+            Mat.SetTexture("_BufferTex", BufferTex);
+            Mat.SetFloat("_TexelX", 1.0f / Screen.width);
+            Mat.SetFloat("_TexelY", 1.0f / Screen.height);
 
-            Mat.mainTexture = WebCameraTexture;
+            // ３０フレーム毎にWebカメラの画像を取得してバッファに流し、Shader内で差分を取る
+            this.FixedUpdateAsObservable()
+                .ThrottleFirstFrame(30)
+                .Subscribe((_) =>
+                {
+                    Graphics.Blit(WebCameraTexture, BufferTex);
+                }).AddTo(gameObject);
         }
     }
 }
