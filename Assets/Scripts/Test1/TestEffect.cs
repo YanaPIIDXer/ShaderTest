@@ -13,22 +13,9 @@ namespace Test1
     public class TestEffect : MonoBehaviour
     {
         /// <summary>
-        /// バッファ確認用
+        /// 描画先
         /// </summary>
-        [SerializeField]
-        private MeshRenderer BufferCheck = null;
-
-        /// <summary>
-        /// 本番テクスチャ確認用
-        /// </summary>
-        [SerializeField]
-        private MeshRenderer RenderCheck = null;
-
-        /// <summary>
-        /// 本番描画先
-        /// </summary>
-        [SerializeField]
-        private MeshRenderer ProductionRenderer = null;
+        private MeshRenderer Renderer = null;
 
         /// <summary>
         /// Webカメラ
@@ -36,8 +23,40 @@ namespace Test1
         [SerializeField]
         private WebCameraRenderer WebCamera = null;
 
+        /// <summary>
+        /// エフェクト描画用カメラ
+        /// </summary>
+        [SerializeField]
+        private Camera EffectCamera = null;
+
+        /// <summary>
+        /// 描画テクスチャ
+        /// </summary>
+        private ReactiveProperty<RenderTexture> _TargetTexture = new ReactiveProperty<RenderTexture>();
+
+        /// <summary>
+        /// 描画テクスチャ
+        /// </summary>
+        public IObservable<RenderTexture> TargetTexture { get { return _TargetTexture; } }
+
+        /// <summary>
+        /// バッファ用テクスチャ
+        /// </summary>
+        private ReactiveProperty<RenderTexture> _BufferTarget = new ReactiveProperty<RenderTexture>();
+
+        /// <summary>
+        /// バッファ用テクスチャ
+        /// </summary>
+        public IObservable<RenderTexture> BufferTarget { get { return _BufferTarget; } }
+
         void Awake()
         {
+            float Height = EffectCamera.orthographicSize * 2;
+            float Width = Height * EffectCamera.aspect;
+            transform.localScale = new Vector3(Width, Height, 0);
+
+            Renderer = GetComponent<MeshRenderer>();
+
             WebCamera.RenderTarget
                 .Where((Tex) => Tex != null)
                 .Subscribe(Initialize).AddTo(gameObject);
@@ -49,23 +68,23 @@ namespace Test1
         /// <param name="WebCameraTexture">Webカメラからの出力テクスチャ</param>
         private void Initialize(RenderTexture WebCameraTexture)
         {
-            var BufferTex = new RenderTexture(1024, 768, 0);
-            var RenderTex = new RenderTexture(1024, 768, 0);
-            Camera.main.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
+            var BufferTex = new RenderTexture(Screen.width, Screen.height, 0);
+            var RenderTex = new RenderTexture(Screen.width, Screen.height, 24);
+            EffectCamera.SetTargetBuffers(new RenderBuffer[] { BufferTex.colorBuffer, RenderTex.colorBuffer }, RenderTex.depthBuffer);
 
-            var Mat = ProductionRenderer.material;
+            var Mat = Renderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
             Mat.SetTexture("_RenderTex", RenderTex);
 
-            BufferCheck.material.mainTexture = BufferTex;
-            RenderCheck.material.mainTexture = RenderTex;
-
-            var CmdBuffer = new CommandBuffer();
+            var PostCmdBuffer = new CommandBuffer();
             var Identifier = new RenderTargetIdentifier(BuiltinRenderTextureType.CurrentActive);
-            CmdBuffer.SetRenderTarget(-1);
-            CmdBuffer.Blit(RenderTex, Identifier);
-            Camera.main.AddCommandBuffer(CameraEvent.AfterEverything, CmdBuffer);
+            PostCmdBuffer.SetRenderTarget(-1);
+            PostCmdBuffer.Blit(RenderTex, Identifier);
+            EffectCamera.AddCommandBuffer(CameraEvent.AfterEverything, PostCmdBuffer);
+
+            _TargetTexture.Value = RenderTex;
+            _BufferTarget.Value = BufferTex;
         }
     }
 }
