@@ -7,7 +7,6 @@
         _WaveMap ("Texture" , 2D) = "white" {}
         _TexelX("Texel X", Float) = 0
         _TexelY("Texel Y", Float) = 0
-        _Enable("Enable", Int) = 0
     }
     SubShader
     {
@@ -44,20 +43,16 @@
 
             sampler2D _MainTex;
             sampler2D _BufferTex;
-            int _Enable;
 
             float4 frag (v2f i) : COLOR0
             {
                 float4 output = float4(0, 0, 0, 1);
-                if (_Enable == 1)
+                float4 main = tex2D(_MainTex, i.uv);
+                float4 buf = tex2D(_BufferTex, i.uv);
+                float th = 0.5f;
+                if (abs(main.r - buf.r) > th || abs(main.g - buf.g) > th || abs(main.b - buf.b) > th)
                 {
-                    float4 main = tex2D(_MainTex, i.uv);
-                    float4 buf = tex2D(_BufferTex, i.uv);
-                    float th = 0.5f;
-                    if (abs(main.r - buf.r) > th || abs(main.g - buf.g) > th || abs(main.b - buf.b) > th)
-                    {
-                        output.r = 1;
-                    }
+                    output.r = 1;
                 }
                 return output;
             }

@@ -57,7 +57,6 @@ namespace Test2
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
             Mat.SetTexture("_WaveMap", WaveMap);
-            Mat.SetInt("_Enable", 0);
             Mat.SetFloat("_TexelX", 1.0f / Screen.width);
             Mat.SetFloat("_TexelY", 1.0f / Screen.height);
 
@@ -74,10 +73,6 @@ namespace Test2
                 {
                     Graphics.Blit(WebCameraTexture, BufferTex);
                 }).AddTo(gameObject);
-
-            // HACK:何故か序盤に物凄い差分が出るので１秒後に起動
-            Observable.Timer(TimeSpan.FromSeconds(1.0))
-                      .Subscribe((_) => Mat.SetInt("_Enable", 1));
 
             // これをやらないとWaveMapが参照できないっぽい
             this.FixedUpdateAsObservable()
