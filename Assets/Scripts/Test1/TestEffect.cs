@@ -75,7 +75,6 @@ namespace Test1
             var Mat = Renderer.material;
             Mat.SetTexture("_MainTex", WebCameraTexture);
             Mat.SetTexture("_BufferTex", BufferTex);
-            Mat.SetTexture("_RenderTex", RenderTex);
 
             var PostCmdBuffer = new CommandBuffer();
             var Identifier = new RenderTargetIdentifier(BuiltinRenderTextureType.CurrentActive);
