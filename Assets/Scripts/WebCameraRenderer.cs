@@ -39,8 +39,8 @@ public class WebCameraRenderer : MonoBehaviour
 
         var Target = new RenderTexture(1024, 768, 0);
         RenderCamera.SetTargetBuffers(Target.colorBuffer, Target.depthBuffer);
-        _RenderTarget.Value = Target;
 
         CamTex.Play();
+        _RenderTarget.Value = Target;
     }
 }
