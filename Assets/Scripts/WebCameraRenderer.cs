@@ -8,6 +8,7 @@ using System;
 /// <summary>
 /// Webカメラ
 /// </summary>
+[RequireComponent(typeof(FillQuad))]
 public class WebCameraRenderer : MonoBehaviour
 {
     /// <summary>
