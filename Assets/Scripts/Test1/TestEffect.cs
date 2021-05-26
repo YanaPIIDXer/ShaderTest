@@ -85,6 +85,8 @@ namespace Test1
             _TargetTexture.Value = RenderTex;
             _BufferTarget.Value = BufferTex;
 
+            // 2FPSで動くWebカメラの映像と見做し、Shader内で60FPSの方と合成する
+            //      →残像の出来上がり
             Observable.Interval(TimeSpan.FromSeconds(0.5))
                       .Subscribe((_) => Graphics.Blit(WebCameraTexture, BufferTex))
                       .AddTo(gameObject);
