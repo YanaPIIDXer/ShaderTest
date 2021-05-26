@@ -14,16 +14,37 @@ public class FillQuad : MonoBehaviour
     /// 対象カメラ
     /// </summary>
     [SerializeField]
-    private Camera TargetCamera = null;
+    private Camera _TargetCamera = null;
+
+    /// <summary>
+    /// 対象カメラ
+    /// </summary>
+    public Camera TargetCamera
+    {
+        get { return _TargetCamera; }
+        set
+        {
+            _TargetCamera = value;
+            FixToCamera();
+        }
+    }
 
     void Awake()
     {
         if (TargetCamera == null)
         {
             // 未設定の場合はメインカメラを使用する
-            TargetCamera = Camera.main;
+            _TargetCamera = Camera.main;
         }
 
+        FixToCamera();
+    }
+
+    /// <summary>
+    /// カメラに合わせる
+    /// </summary>
+    private void FixToCamera()
+    {
         float Height = TargetCamera.orthographicSize * 2;
         float Width = Height * TargetCamera.aspect;
         transform.localScale = new Vector3(Width, Height, 1);

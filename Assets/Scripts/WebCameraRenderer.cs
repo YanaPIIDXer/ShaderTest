@@ -30,6 +30,8 @@ public class WebCameraRenderer : MonoBehaviour
 
     void Awake()
     {
+        GetComponent<FillQuad>().TargetCamera = RenderCamera;
+
         WebCamDevice Device = WebCamTexture.devices[0];
         var CamTex = new WebCamTexture(Device.name, Screen.width, Screen.height, 60);
 
