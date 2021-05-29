@@ -48,7 +48,7 @@
                 float4 col = float4(0, 0, 0, 1);
                 float4 main = tex2D(_MainTex, i.uv);
                 float4 buffer = tex2D(_BufferTex, i.uv);
-                float th = 0.002f;
+                float th = 0.03f;
                 if (abs(main.r - buffer.r) > th || abs(main.g - buffer.g) > th || abs(main.b - buffer.b) > th)
                 {
                     col.r = 1;
@@ -98,11 +98,14 @@
                 float diff = tex2D(_DiffTex, i.uv).r;
                 if (diff < 1.0f)
                 {
-                    float4 up = tex2D(_MainTex, i.uv - float2(0.0f, _TexelY));
-                    float4 down = tex2D(_MainTex, i.uv + float2(0.0f, _TexelY));
-                    float4 left = tex2D(_MainTex, i.uv - float2(_TexelX, 0.0f));
-                    float4 right = tex2D(_MainTex, i.uv + float2(_TexelX, 0.0f));
-                    col = (col + up + down + left + right) * 0.2f;
+                    for (int idx = 1; idx <= 10; idx++)
+                    {
+                        float4 up = tex2D(_MainTex, i.uv - float2(0.0f, _TexelY * idx));
+                        float4 down = tex2D(_MainTex, i.uv + float2(0.0f, _TexelY * idx));
+                        float4 left = tex2D(_MainTex, i.uv - float2(_TexelX * idx, 0.0f));
+                        float4 right = tex2D(_MainTex, i.uv + float2(_TexelX * idx, 0.0f));
+                        col = (col + up + down + left + right) * 0.2f;
+                    }
                 }
                 return col;
             }
