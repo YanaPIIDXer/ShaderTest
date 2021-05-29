@@ -4,6 +4,8 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _BufferTex ("Texture", 2D) = "white" {}
+        _TexelX("Texel X", Float) = 0
+        _TexelY("Texel Y", Float) = 0
     }
     SubShader
     {
@@ -87,6 +89,8 @@
 
             sampler2D _MainTex;
             sampler2D _DiffTex;
+            float _TexelX;
+            float _TexelY;
 
             float4 frag (v2f i) : COLOR0
             {
@@ -94,7 +98,11 @@
                 float diff = tex2D(_DiffTex, i.uv).r;
                 if (diff < 1.0f)
                 {
-                    col = float4(0, 1, 0, 1);
+                    float4 up = tex2D(_MainTex, i.uv - float2(0.0f, _TexelY));
+                    float4 down = tex2D(_MainTex, i.uv + float2(0.0f, _TexelY));
+                    float4 left = tex2D(_MainTex, i.uv - float2(_TexelX, 0.0f));
+                    float4 right = tex2D(_MainTex, i.uv + float2(_TexelX, 0.0f));
+                    col = (col + up + down + left + right) * 0.2f;
                 }
                 return col;
             }
