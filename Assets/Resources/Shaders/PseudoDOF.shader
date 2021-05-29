@@ -43,8 +43,15 @@
 
             float4 frag (v2f i) : COLOR0
             {
-                float4 main = tex2D(_BufferTex, i.uv);
-                return main;
+                float4 col = float4(0, 0, 0, 1);
+                float4 main = tex2D(_MainTex, i.uv);
+                float4 buffer = tex2D(_BufferTex, i.uv);
+                float th = 0.03f;
+                if (abs(main.r - buffer.r) > th || abs(main.g - buffer.g) > th || abs(main.b - buffer.b) > th)
+                {
+                    col.r = 1;
+                }
+                return col;
             }
             ENDCG
         }
