@@ -46,7 +46,7 @@
                 float4 col = float4(0, 0, 0, 1);
                 float4 main = tex2D(_MainTex, i.uv);
                 float4 buffer = tex2D(_BufferTex, i.uv);
-                float th = 0.03f;
+                float th = 0.002f;
                 if (abs(main.r - buffer.r) > th || abs(main.g - buffer.g) > th || abs(main.b - buffer.b) > th)
                 {
                     col.r = 1;
@@ -90,13 +90,15 @@
 
             float4 frag (v2f i) : COLOR0
             {
-                float4 main = tex2D(_MainTex, i.uv);
-                float4 diff = tex2D(_DiffTex, i.uv);
-                return diff;
+                float4 col = tex2D(_MainTex, i.uv);
+                float diff = tex2D(_DiffTex, i.uv).r;
+                if (diff < 1.0f)
+                {
+                    col = float4(0, 1, 0, 1);
+                }
+                return col;
             }
             ENDCG
         }
-
-
     }
 }

@@ -30,7 +30,7 @@ namespace Test4
             Mat.SetTexture("_MainTex", WebCam.CamTex);
             Mat.SetTexture("_BufferTex", BufferTex);
 
-            Observable.IntervalFrame(30)
+            Observable.IntervalFrame(10)
                       .Subscribe((_) => Graphics.Blit(WebCam.CamTex, BufferTex))
                       .AddTo(gameObject);
         }
