@@ -32,7 +32,7 @@ namespace Test4
             Mat.SetFloat("_TexelX", 1.0f / 1024);
             Mat.SetFloat("_TexelY", 1.0f / 768);
 
-            Observable.IntervalFrame(40)
+            Observable.Interval(TimeSpan.FromMilliseconds(1000.0f / 30))
                       .Subscribe((_) => Graphics.Blit(WebCam.CamTex, BufferTex))
                       .AddTo(gameObject);
         }
