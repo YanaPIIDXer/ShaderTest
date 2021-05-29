@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _BufferTex ("Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -38,10 +39,11 @@
             }
 
             sampler2D _MainTex;
+            sampler2D _BufferTex;
 
             float4 frag (v2f i) : COLOR0
             {
-                float4 main = tex2D(_MainTex, i.uv);
+                float4 main = tex2D(_BufferTex, i.uv);
                 return main;
             }
             ENDCG
