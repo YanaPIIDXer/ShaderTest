@@ -36,5 +36,12 @@ namespace Test4
                       .Subscribe((_) => Graphics.Blit(WebCam.CamTex, BufferTex))
                       .AddTo(gameObject);
         }
+
+        void OnDestroy()
+        {
+            // シーン遷移が絡む場合、これが無いとカメラを掴みっぱなしになる
+            // デストラクタでやっても駄目だった
+            WebCam.Stop();
+        }
     }
 }

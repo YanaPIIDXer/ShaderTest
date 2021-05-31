@@ -31,10 +31,11 @@ public class WebCamera
         CamTex.Play();
     }
 
-    ~WebCamera()
+    /// <summary>
+    /// 停止
+    /// </summary>
+    public void Stop()
     {
-        // シーン遷移が絡む場合、これが無いとカメラを掴みっぱなしになる
-        // ※EditorでPlayModeを抜ける時は何故か問題なくカメラを放す
         if (CamTex != null)
         {
             CamTex.Stop();
