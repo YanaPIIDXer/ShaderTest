@@ -66,9 +66,9 @@ namespace Test2
             PostCmdBuffer.Blit(RenderTex, Identifier);
             RenderCamera.AddCommandBuffer(CameraEvent.AfterEverything, PostCmdBuffer);
 
-            // １０フレーム毎にWebカメラの画像を取得してバッファに流し、差分を取る
+            // 一定フレーム毎にWebカメラの画像を取得してバッファに流し、差分を取る
             this.FixedUpdateAsObservable()
-                .ThrottleFirstFrame(10)
+                .ThrottleFirstFrame(50)
                 .Subscribe((_) =>
                 {
                     Graphics.Blit(WebCameraTexture, BufferTex);

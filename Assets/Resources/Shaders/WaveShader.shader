@@ -114,7 +114,7 @@
                 float4 diff = tex2D(_DiffMap, i.uv);
                 if (diff.r > 0)
                 {
-                    col.r = 0.1f;
+                    col.r = 1.0f;
                 }
                 return col;
             }
@@ -158,9 +158,9 @@
             {
                 float4 col = tex2D(_MainTex, i.uv);
                 float wave = tex2D(_WaveGrab, i.uv).r;
-                if (wave > 0)
+                if (wave > 0.0f)
                 {
-                    col *= wave;
+                    col *= wave * 1.5f;
                 }
                 return col;
             }
